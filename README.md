@@ -27,7 +27,7 @@ while ((s = bf.readLine()) != null) {
 
 #### Analyse
 
-Upon identifying the keyword, proceed to the next analysis.
+After identifying the current token, continue with the next step of analysis.
 
 ```java
 while ((c = getChar()) != null) {
@@ -57,13 +57,13 @@ while ((c = getChar()) != null) {
 
 ##### Common
 
-For example, when encountering '+', directly create a new Word and typify it as "PLUS".
+For example, when encountering `+`, directly create a new `Word` and classify it as `PLUS`.
 
 ##### Function
 
 For example
 
-When encountering `<`, enter the function `analyseRelation` to read one more character. If it is `=`, analyze as `LEQ`...
+When encountering `<`, enter the function `analyseRelation` to read one more character. If it is `=`, classify it as `LEQ`...
 
 ```java
 if (c == '<') {
@@ -76,13 +76,13 @@ if (c == '<') {
   }
 ```
 
-`analyseLogic` is as the same.
+`analyseLogic` works in the same way.
 
 ##### Digit and Letter
 
-Digit: When encountering a digit, scan a series of digits and turn them into a Word typified as "INTCON".
+Digit: When encountering a digit, scan a sequence of digits and turn it into a `Word` classified as `INTCON`.
 
-Letter: When encountering a letter, scan a string of letters or digits. It may be an "IDENFR" or "STRCON", depending on whether it is in the key map or not.
+Letter: When encountering a letter, scan a string of letters or digits. It may become `IDENFR` or `STRCON`, depending on whether it exists in the keyword map.
 
 #### Word
 
@@ -96,7 +96,7 @@ public class Word {
 }
 ```
 
-Encapsulate the initial function so that only `new Word(...)` is needed in the main processor, which will create the corresponding word.
+Encapsulate the initialization logic so that only `new Word(...)` is needed in the main processor, which will create the corresponding token.
 
 For example
 
@@ -108,7 +108,7 @@ For example
     }
 ```
 
-As for KeyWordMap, it is a HashMap that maps the string of a word to its type.
+`KeyWordMap` is a `HashMap` that maps each token string to its type.
 
 ```java
     public KeyWordMap() {
@@ -125,9 +125,9 @@ As for KeyWordMap, it is a HashMap that maps the string of a word to its type.
 #### File reading
 
 
-Reading the file line by line is not convenient for prereading and undoing, so the file is read into a single String at first.
+Reading the file line by line is not convenient for lookahead or undo operations, so the file is first read into a single `String`.
 
-The method involves reading the file line by line, adding `\n` after every line, and scanning every character. When `\n` is encountered, `lineNum++`
+The method reads the file line by line, appends `\n` after each line, and then scans every character. When `\n` is encountered, `lineNum++`.
 
 ```java
     private String transferFileToCode() {
@@ -145,7 +145,7 @@ The method involves reading the file line by line, adding `\n` after every line,
 
 Regarding analysis, it is different from what was described before coding.
 
-First, words need to be analyzed one by one, so a global variable `index` is added to remember the pointer's position.
+First, tokens need to be analyzed one by one, so a global variable `index` is added to track the current pointer position.
 
 Additionally, situations may arise where reading one more character or undoing a read is necessary, so the functions `ungetChar` and `getChar` are encapsulated to facilitate the analysis.
 
